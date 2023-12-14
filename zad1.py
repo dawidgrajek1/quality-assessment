@@ -3,7 +3,7 @@ from Bio.PDB.Superimposer import Superimposer
 from math import sqrt
 
 
-def calculateRMSD(A, B) -> float:
+def calculateRMSD(A: list, B: list) -> float:
     sum: float = 0
 
     for a, b in zip(A, B):
@@ -21,7 +21,7 @@ models = parser.get_structure("models", "R1107TS081.pdb")
 print("Model\tRMSD")
 for model in models:
     modelAtoms = [x for x in model.get_atoms()]
-    modelAtoms = modelAtoms[abs(len(modelAtoms) - len(refAtoms)) :]
+    modelAtoms = modelAtoms[abs(len(modelAtoms) - len(refAtoms)):]
 
     si.set_atoms(refAtoms, modelAtoms)
     si.apply(modelAtoms)
