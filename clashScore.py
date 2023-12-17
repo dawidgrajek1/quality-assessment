@@ -29,6 +29,21 @@ def count_clashes(structure, clash_cutoff=0.4):
             if atoms[i].parent.id == atoms[j].parent.id:
                 continue
 
+            # elif (atoms[j].element == "C" and atoms[i].element == "P") or (
+            #     atoms[j].element == "P" and atoms[i].element == "C"
+            # ):
+            #     continue
+
+            # elif (atoms[j].element == "C" and atoms[i].element == "P") or (
+            #     atoms[j].element == "P" and atoms[i].element == "C"
+            # ):
+            #     continue
+
+            # elif (atoms[j].element == "C" and atoms[i].element == "O") or (
+            #     atoms[j].element == "O" and atoms[i].element == "C"
+            # ):
+            #     continue
+
             if (
                 atoms[i] - atoms[j]
                 <= clashCutoffs[atoms[i].element + "_" + atoms[j].element]
