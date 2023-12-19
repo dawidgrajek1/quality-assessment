@@ -29,8 +29,19 @@ def count_clashes(structure, clash_cutoff=0.4):
             if atoms[i].parent.id == atoms[j].parent.id:
                 continue
 
-            # elif (atoms[j].element == "C" and atoms[i].element == "P") or (
-            #     atoms[j].element == "P" and atoms[i].element == "C"
+            elif (atoms[i].parent.id[1]) == (atoms[j].parent.id[1] + 1):
+                continue
+
+            elif (atoms[i].parent.id[1]) == (atoms[j].parent.id[1] - 1):
+                continue
+
+            # elif (atoms[j].element == "O" and atoms[i].element == "P") or (
+            #     atoms[j].element == "P" and atoms[i].element == "O"
+            # ):
+            #     continue
+
+            # elif (atoms[j].element == "N" and atoms[i].element == "H") or (
+            #     atoms[j].element == "H" and atoms[i].element == "N"
             # ):
             #     continue
 
@@ -44,20 +55,13 @@ def count_clashes(structure, clash_cutoff=0.4):
             # ):
             #     continue
 
-            if (
+            # elif atoms[j].element == "C" and atoms[i].element == "C":
+            #     continue
+
+            elif (
                 atoms[i] - atoms[j]
                 <= clashCutoffs[atoms[i].element + "_" + atoms[j].element]
             ):
-                # print(
-                #     atoms[i].serial_number,
-                #     atoms[i].element,
-                #     "\t",
-                #     atoms[j].serial_number,
-                #     atoms[j].element,
-                #     "\t",
-                #     clashCutoffs[atoms[i].element + "_" + atoms[j].element]
-                #     - (atoms[i] - atoms[j]),
-                # )
                 counter += 1
     print("Number of clashes: ", counter)
     return counter * 1000 / len(atoms)
