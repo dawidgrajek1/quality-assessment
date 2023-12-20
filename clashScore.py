@@ -1,6 +1,9 @@
 from Bio import PDB
 from sys import argv
 
+# adapted from:
+# https://www.blopig.com/blog/2023/05/checking-your-pdb-file-for-clashing-atoms/
+
 atom_radii = {
     "H": 1.20,
     "C": 1.70,
@@ -14,7 +17,7 @@ atom_radii = {
 }
 
 
-def count_clashes(structure, clash_cutoff=0.4):
+def count_clashes(structure, clash_cutoff=0.4) -> float:
     counter = 0
     clashCutoffs = {
         i + "_" + j: (atom_radii[i] + atom_radii[j] - clash_cutoff)
@@ -35,29 +38,6 @@ def count_clashes(structure, clash_cutoff=0.4):
             elif (atoms[i].parent.id[1]) == (atoms[j].parent.id[1] - 1):
                 continue
 
-            # elif (atoms[j].element == "O" and atoms[i].element == "P") or (
-            #     atoms[j].element == "P" and atoms[i].element == "O"
-            # ):
-            #     continue
-
-            # elif (atoms[j].element == "N" and atoms[i].element == "H") or (
-            #     atoms[j].element == "H" and atoms[i].element == "N"
-            # ):
-            #     continue
-
-            # elif (atoms[j].element == "C" and atoms[i].element == "P") or (
-            #     atoms[j].element == "P" and atoms[i].element == "C"
-            # ):
-            #     continue
-
-            # elif (atoms[j].element == "C" and atoms[i].element == "O") or (
-            #     atoms[j].element == "O" and atoms[i].element == "C"
-            # ):
-            #     continue
-
-            # elif atoms[j].element == "C" and atoms[i].element == "C":
-            #     continue
-
             elif (
                 atoms[i] - atoms[j]
                 <= clashCutoffs[atoms[i].element + "_" + atoms[j].element]
@@ -73,4 +53,4 @@ if len(argv) != 2:
 
 parser = PDB.PDBParser(QUIET=True)
 structure = parser.get_structure("struct", argv[1])
-print("Clash score: ", count_clashes(structure))
+print("Clash score: ", round(count_clashes(structure), 4))

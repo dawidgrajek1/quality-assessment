@@ -3,7 +3,7 @@ from Bio.PDB.PDBIO import PDBIO
 
 parser = PDB.PDBParser(QUIET=True)
 
-model = parser.get_structure("model", "zad2output.pdb")
+model = parser.get_structure("model", "model1.pdb")
 ref = parser.get_structure("ref", "R1107_reference.pdb")
 
 for chain1, chain2 in zip(model.get_chains(), ref.get_chains()):
